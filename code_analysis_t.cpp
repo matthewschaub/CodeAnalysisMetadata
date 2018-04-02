@@ -95,7 +95,7 @@ int main() {
         assert(request.given_filename == "main.cpp");
         assert(request.entry_filename == "data");
         assert(analysis_url(request) == "");
-        assert(analysis_language(request, filename) == "");
+        assert(analysis_language(request, filename) == "C++");
         assert(code_analysis(request) == false);
     }
     // option url precedence
