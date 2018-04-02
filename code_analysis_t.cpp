@@ -46,7 +46,7 @@ int main() {
     //given_filename is name on the disk
     {
         analysis_request request;
-        request.given_filename  = "project.tar.gz";
+        request.given_filename  = "main.cpp";
         request.entry_filename  = "";
         request.given_url       = "";
         request.option_filename = "";
@@ -54,9 +54,27 @@ int main() {
         request.option_language = "";
 
         auto filename = analysis_filename(request);
-        assert(filename == "project.tar.gz");
-        assert(request.given_filename == "project.tar.gz");
+        assert(filename == "main.cpp");
+        assert(request.given_filename == "main.cpp");
         assert(request.entry_filename == "");
+        assert(analysis_url(request) == "");
+        assert(analysis_language(request, filename) == "");
+        assert(code_analysis(request) == false);
+    }
+    //given_filename is source code
+    {
+        analysis_request request;
+        request.given_filename  = "project.tar.gz";
+        request.entry_filename  = "different.tar.gz";
+        request.given_url       = "";
+        request.option_filename = "";
+        request.option_url      = "";
+        request.option_language = "";
+
+        auto filename = analysis_filename(request);
+        assert(filename == "different.tar.gz");
+        assert(request.given_filename == "");
+        assert(request.entry_filename == "project.tar.gz");
         assert(analysis_url(request) == "");
         assert(analysis_language(request, filename) == "");
         assert(code_analysis(request) == false);
