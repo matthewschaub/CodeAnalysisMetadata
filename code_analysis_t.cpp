@@ -28,6 +28,7 @@ int main() {
         assert(code_analysis(request) == false);
     }
     //filename is explicitly defined
+    //case overlap added language test
     {
         analysis_request request;
         request.given_filename  = "";
@@ -40,7 +41,7 @@ int main() {
         auto filename = analysis_filename(request);
         assert(filename == "main.cpp");
         assert(analysis_url(request) == "");
-        assert(analysis_language(request, filename) == "");
+        assert(analysis_language(request, filename) == "C++");
         assert(code_analysis(request) == false);
     }
     //given_filename is name on the disk
@@ -145,23 +146,6 @@ int main() {
         assert(analysis_language(request, filename) == "C++");
         assert(code_analysis(request) == false);
     }
-    //language from file
-    {
-        analysis_request request;
-        request.given_filename  = "main.cpp";
-        request.entry_filename  = "";
-        request.given_url       = "";
-        request.option_filename = "";
-        request.option_url      = "";
-        request.option_language = "";
-
-        auto filename = analysis_filename(request);
-        assert(filename == "");
-        assert(analysis_url(request) == "");
-        assert(analysis_language(request, filename) == "C++");
-        assert(code_analysis(request) == false);
-    }
-
 
 
     return 0;

@@ -72,5 +72,7 @@ std::string analysis_language(const analysis_request& request, const std::string
     if(request.option_language != "")
       //good place for extension not supported error handling
       return request.option_language; 
+    else if(request.option_filename != "")
+      return get_language_from_filename(request.option_filename); 
     return "";
 }
