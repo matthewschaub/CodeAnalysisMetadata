@@ -61,7 +61,7 @@ int main() {
         assert(analysis_language(request, filename) == "");
         assert(code_analysis(request) == false);
     }
-    //given_filename is source code
+    //given_filename is source code archive
     {
         analysis_request request;
         request.given_filename  = "project.tar.gz";
@@ -73,8 +73,8 @@ int main() {
 
         auto filename = analysis_filename(request);
         assert(filename == "different.tar.gz");
-        assert(request.given_filename == "");
-        assert(request.entry_filename == "project.tar.gz");
+        assert(request.given_filename == "project.tar.gz");
+        assert(request.entry_filename == "different.tar.gz");
         assert(analysis_url(request) == "");
         assert(analysis_language(request, filename) == "");
         assert(code_analysis(request) == false);

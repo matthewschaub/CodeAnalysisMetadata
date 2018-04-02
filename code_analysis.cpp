@@ -40,6 +40,8 @@ std::string analysis_filename(const analysis_request& request) {
     }
     else if(request.given_filename != "")
     {
+      if(get_language_from_filename(request.given_filename) == "")
+        return request.entry_filename; 
       return request.given_filename; 
     }
     else 
