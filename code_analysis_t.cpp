@@ -46,15 +46,15 @@ int main() {
     //given_filename is name on the disk
     {
         analysis_request request;
-        request.given_filename  = "";
+        request.given_filename  = "project.tar.gz";
         request.entry_filename  = "";
         request.given_url       = "";
-        request.option_filename = "project.tar.gz";
+        request.option_filename = "";
         request.option_url      = "";
         request.option_language = "";
 
         auto filename = analysis_filename(request);
-        assert(filename == "main.cpp");
+        assert(filename == "project.tar.gz");
         assert(request.given_filename == "project.tar.gz");
         assert(request.entry_filename == "");
         assert(analysis_url(request) == "");

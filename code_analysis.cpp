@@ -35,8 +35,14 @@ bool code_analysis(const analysis_request& request) {
 std::string analysis_filename(const analysis_request& request) {
 
     if(request.option_filename != "")
-      return request.option_filename; 
-    else
+    {
+      return request.option_filename;
+    }
+    else if(request.given_filename != "")
+    {
+      return request.given_filename; 
+    }
+    else 
       return "";
 }
 
