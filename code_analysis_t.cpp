@@ -28,5 +28,21 @@ int main() {
         assert(code_analysis(request) == false);
     }
 
+    {
+        analysis_request request;
+        request.given_filename  = "";
+        request.entry_filename  = "";
+        request.given_url       = "";
+        request.option_filename = "";
+        request.option_url      = "";
+        request.option_language = "";
+
+        auto filename = request.option_filename;
+        assert(filename == "");
+        assert(analysis_url(request) == "");
+        assert(analysis_language(request, filename) == "");
+        assert(code_analysis(request) == false);
+    }
+
     return 0;
 }
