@@ -69,5 +69,8 @@ std::string analysis_url(const analysis_request& request) {
  */
 std::string analysis_language(const analysis_request& request, const std::string& filename) {
 
+    if(request.option_language != "")
+      //good place for extension not supported error handling
+      return request.option_language; 
     return "";
 }
