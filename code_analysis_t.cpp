@@ -97,6 +97,22 @@ int main() {
         assert(analysis_language(request, filename) == "");
         assert(code_analysis(request) == false);
     }
+    // option url precedence
+    {
+        analysis_request request;
+        request.given_filename  = "";
+        request.entry_filename  = "";
+        request.given_url       = "www.google.com";
+        request.option_filename = "";
+        request.option_url      = "www.facebook.com";
+        request.option_language = "";
+
+        auto filename = analysis_filename(request);
+        assert(filename == "");
+        assert(analysis_url(request) == "www.facebook.com");
+        assert(analysis_language(request, filename) == "");
+        assert(code_analysis(request) == false);
+    }
 
 
     return 0;
