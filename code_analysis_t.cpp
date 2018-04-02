@@ -27,22 +27,24 @@ int main() {
         assert(analysis_language(request, filename) == "");
         assert(code_analysis(request) == false);
     }
-
+    //filename is explicitly defined
     {
         analysis_request request;
         request.given_filename  = "";
         request.entry_filename  = "";
         request.given_url       = "";
-        request.option_filename = "";
+        request.option_filename = "main.cpp";
         request.option_url      = "";
         request.option_language = "";
 
-        auto filename = request.option_filename;
-        assert(filename == "");
+        auto filename = analysis_filename(request);
+        assert(filename == "main.cpp");
         assert(analysis_url(request) == "");
         assert(analysis_language(request, filename) == "");
         assert(code_analysis(request) == false);
     }
+    //given_filename is the name on the disk
+
 
     return 0;
 }
