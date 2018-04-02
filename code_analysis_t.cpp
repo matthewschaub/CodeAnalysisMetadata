@@ -43,7 +43,24 @@ int main() {
         assert(analysis_language(request, filename) == "");
         assert(code_analysis(request) == false);
     }
-    //given_filename is the name on the disk
+    //given_filename is name on the disk
+    {
+        analysis_request request;
+        request.given_filename  = "";
+        request.entry_filename  = "";
+        request.given_url       = "";
+        request.option_filename = "project.tar.gz";
+        request.option_url      = "";
+        request.option_language = "";
+
+        auto filename = analysis_filename(request);
+        assert(filename == "main.cpp");
+        assert(request.given_filename == "project.tar.gz");
+        assert(request.entry_filename == "");
+        assert(analysis_url(request) == "");
+        assert(analysis_language(request, filename) == "");
+        assert(code_analysis(request) == false);
+    }
 
 
     return 0;
