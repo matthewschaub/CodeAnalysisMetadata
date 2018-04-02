@@ -34,7 +34,10 @@ bool code_analysis(const analysis_request& request) {
  */
 std::string analysis_filename(const analysis_request& request) {
 
-    return "";
+    if(request.option_filename != "")
+      return request.option_filename; 
+    else
+      return "";
 }
 
 /** URL extracted from the request
