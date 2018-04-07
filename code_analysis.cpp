@@ -89,7 +89,9 @@ std::string analysis_language(const analysis_request& request, const std::string
 
     return "";
 }
-bool extSupport(std::string& filename){
+bool extSupport(std::string& language){
+  if(language != "")
+    return true; 
   return false;  
 }
 bool langSupport(std::string& s){
