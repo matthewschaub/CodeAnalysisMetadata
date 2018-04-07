@@ -7,7 +7,7 @@
 
 #include "code_analysis.hpp"
 #include "get_language_from_filename.hpp"
-
+#include <iostream>
 #include <string>
 
 /** Generate source analysis based on the request
@@ -24,7 +24,12 @@ bool code_analysis(const analysis_request& request) {
     auto language = analysis_language(request, filename);
 
     // code analysis processing that is not yet implemented
+    auto extSupported = extSupport(filename);
 
+    
+    auto langSupported = langSupport(language);
+
+    
     return false;
 }
 
@@ -83,4 +88,10 @@ std::string analysis_language(const analysis_request& request, const std::string
     }
 
     return "";
+}
+bool extSupport(std::string& filename){
+  return false; 
+}
+bool langSupport(std::string& s){
+  return false; 
 }
