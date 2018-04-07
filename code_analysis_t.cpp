@@ -212,6 +212,41 @@ int main() {
         assert(extSupport(language) == true);
         assert(code_analysis(request) == false);
     }
+    //test for stdin requires declared language
+    {
+        analysis_request request;
+        request.given_filename  = "-";
+        request.entry_filename  = "data";
+        request.given_url       = "";
+        request.option_filename = "";
+        request.option_url      = "";
+        request.option_language = "";
+
+        auto filename = analysis_filename(request);
+        auto language = analysis_language(request, filename);
+        assert(filename == "");
+        assert(analysis_language(request, filename) == "");
+        assert(langSupport(request,language) == false);
+        assert(code_analysis(request) == false);
+    }
+    //test for stdin requires declared language true case
+    {
+        analysis_request request;
+        request.given_filename  = "-";
+        request.entry_filename  = "data";
+        request.given_url       = "";
+        request.option_filename = "";
+        request.option_url      = "";
+        request.option_language = "";
+
+        auto filename = analysis_filename(request);
+        auto language = analysis_language(request, filename);
+        assert(filename == "");
+        assert(analysis_language(request, filename) == "");
+        assert(langSupport(request,language) == true);
+        assert(code_analysis(request) == false);
+    }
+
 
 
 

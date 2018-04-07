@@ -27,7 +27,7 @@ bool code_analysis(const analysis_request& request) {
     auto extSupported = extSupport(language);
 
     
-    auto langSupported = langSupport(language);
+    auto langSupported = langSupport(request, language);
 
     
     return false;
@@ -94,6 +94,6 @@ bool extSupport(std::string& language){
     return true; 
   return false;  
 }
-bool langSupport(std::string& s){
+bool langSupport(const analysis_request& request, std::string& language){
   return false; 
 }
