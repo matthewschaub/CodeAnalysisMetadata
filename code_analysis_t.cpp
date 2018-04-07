@@ -178,6 +178,76 @@ int main() {
         assert(analysis_language(request, filename) == "");
         assert(code_analysis(request) == false);
     }
+    //test for extension not supported error
+    {
+        analysis_request request;
+        request.given_filename  = "";
+        request.entry_filename  = "";
+        request.given_url       = "";
+        request.option_filename = "";
+        request.option_url      = "";
+        request.option_language = "";
+
+        auto filename = analysis_filename(request);
+        auto language = analysis_language(request, filename);
+        assert(filename == "");
+        assert(analysis_language(request, filename) == "");
+        assert(extSupport(language) == false);
+        assert(code_analysis(request) == false);
+    }
+    //test when extension defined 
+    {
+        analysis_request request;
+        request.given_filename  = "";
+        request.entry_filename  = "";
+        request.given_url       = "";
+        request.option_filename = "";
+        request.option_url      = "";
+        request.option_language = "C++";
+
+        auto filename = analysis_filename(request);
+        auto language = analysis_language(request, filename);
+        assert(filename == "");
+        assert(analysis_language(request, filename) == "C++");
+        assert(extSupport(language) == true);
+        assert(code_analysis(request) == false);
+    }
+    //test for stdin requires declared language
+    {
+        analysis_request request;
+        request.given_filename  = "-";
+        request.entry_filename  = "data";
+        request.given_url       = "";
+        request.option_filename = "";
+        request.option_url      = "";
+        request.option_language = "";
+
+        auto filename = analysis_filename(request);
+        auto language = analysis_language(request, filename);
+        assert(filename == "");
+        assert(analysis_language(request, filename) == "");
+        assert(langSupport(request,language) == false);
+        assert(code_analysis(request) == false);
+    }
+    //test for stdin requires declared language true case
+    {
+        analysis_request request;
+        request.given_filename  = "-";
+        request.entry_filename  = "data";
+        request.given_url       = "";
+        request.option_filename = "main.cpp";
+        request.option_url      = "";
+        request.option_language = "";
+
+        auto filename = analysis_filename(request);
+        auto language = analysis_language(request, filename);
+        assert(filename == "main.cpp");
+        assert(analysis_language(request, filename) == "C++");
+        assert(langSupport(request,language) == true);
+        assert(code_analysis(request) == false);
+    }
+
+
 
 
     return 0;
