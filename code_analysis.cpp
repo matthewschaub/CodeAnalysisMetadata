@@ -95,5 +95,7 @@ bool extSupport(std::string& language){
   return false;  
 }
 bool langSupport(const analysis_request& request, std::string& language){
-  return false; 
+  if(request.given_filename == "-" && language == "")
+    return false; 
+  return true; 
 }

@@ -235,14 +235,14 @@ int main() {
         request.given_filename  = "-";
         request.entry_filename  = "data";
         request.given_url       = "";
-        request.option_filename = "";
+        request.option_filename = "main.cpp";
         request.option_url      = "";
         request.option_language = "";
 
         auto filename = analysis_filename(request);
         auto language = analysis_language(request, filename);
-        assert(filename == "");
-        assert(analysis_language(request, filename) == "");
+        assert(filename == "main.cpp");
+        assert(analysis_language(request, filename) == "C++");
         assert(langSupport(request,language) == true);
         assert(code_analysis(request) == false);
     }
