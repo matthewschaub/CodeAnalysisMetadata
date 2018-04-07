@@ -191,6 +191,7 @@ int main() {
         auto filename = analysis_filename(request);
         assert(filename == "");
         assert(extSupport(filename) == false);
+        assert(code_analysis(request) == false);
     }
 
 

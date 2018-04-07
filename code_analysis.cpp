@@ -24,7 +24,7 @@ bool code_analysis(const analysis_request& request) {
     auto language = analysis_language(request, filename);
 
     // code analysis processing that is not yet implemented
-    auto extSupported = extSupport(filename);
+    auto extSupported = extSupport(language);
 
     
     auto langSupported = langSupport(language);
@@ -90,7 +90,7 @@ std::string analysis_language(const analysis_request& request, const std::string
     return "";
 }
 bool extSupport(std::string& filename){
-  return false; 
+  return true;  
 }
 bool langSupport(std::string& s){
   return false; 
