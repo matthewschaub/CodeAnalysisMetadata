@@ -24,10 +24,11 @@ bool code_analysis(const analysis_request& request) {
     auto language = analysis_language(request, filename);
 
     // code analysis processing that is not yet implemented
-    auto extSupported = extSupport(language);
+    if(!extSupport(language))
+      std::cerr << "Extension not supported\n"; 
 
-    
-    auto langSupported = langSupport(request, language);
+    if(!langSupport(request, language))
+      std::cerr << "Using stdin requires a declared language\n";
 
     
     return false;
