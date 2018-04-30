@@ -115,82 +115,82 @@
 
 ## Code
 % srcml code_analysis.cpp code_analysis_t.cpp -o project.xml
-% srcml --xpath="//src:function[src:name='code_analysis']" project.xml | srcml | cat -v
+% srcml --xpath="//src:function[src:name='code_analysis']" project.xml | srcml
 
-    bool code_analysis(const analysis_request& request) {
-    
-        auto filename = analysis_filename(request);
-    
-        auto url = analysis_url(request);
-    
-        auto language = analysis_language(request, filename);
-    
-        // code analysis processing that is not yet implemented
-        if(!extSupport(language))
-          std::cerr << "Extension not supported\n"; 
-    
-        if(!langSupport(request, language))
-          std::cerr << "Using stdin requires a declared language\n";
-    
-        
-        return false;
-    }
+     1 bool code_analysis(const analysis_request& request) {
+     2 
+     3     auto filename = analysis_filename(request);
+     4 
+     5     auto url = analysis_url(request);
+     6 
+     7     auto language = analysis_language(request, filename);
+     8 
+     9     // code analysis processing that is not yet implemented
+    10     if(!extSupport(language))
+    11       std::cerr << "Extension not supported\n"; 
+    12 
+    13     if(!langSupport(request, language))
+    14       std::cerr << "Using stdin requires a declared language\n";
+    15 
+    16     
+    17     return false;
+    18 }
 
-% srcml --xpath="//src:function[src:name='analysis_filename']" project.xml | srcml | cat -v
+% srcml --xpath="//src:function[src:name='analysis_filename']" project.xml | srcml
 
-    std::string analysis_filename(const analysis_request& request) {
-    
-        if(request.option_filename != "")
-        {
-          return request.option_filename;
-        }
-        else if(request.given_filename != "")
-        {
-          if(request.given_filename == "-")
-            //throw error for stdin requires a declared language
-            //********************************************************
-            return ""; 
-          else if(get_language_from_filename(request.given_filename) == "")
-            return request.entry_filename; 
-          return request.given_filename; 
-        }
-        else 
-          return "";
-    }
+     1 std::string analysis_filename(const analysis_request& request) {
+     2 
+     3     if(request.option_filename != "")
+     4     {
+     5       return request.option_filename;
+     6     }
+     7     else if(request.given_filename != "")
+     8     {
+     9       if(request.given_filename == "-")
+    10         //throw error for stdin requires a declared language
+    11         //********************************************************
+    12         return ""; 
+    13       else if(get_language_from_filename(request.given_filename) == "")
+    14         return request.entry_filename; 
+    15       return request.given_filename; 
+    16     }
+    17     else 
+    18       return "";
+    19 }
 
-% srcml --xpath="//src:function[src:name='analysis_url']" project.xml | srcml | cat -v
+% srcml --xpath="//src:function[src:name='analysis_url']" project.xml | srcml
 
-    std::string analysis_url(const analysis_request& request) {
-    
-        if(request.option_url != "")
-          return request.option_url;
-        else if(request.given_url != "") 
-          return request.given_url; 
-        else
-          return ""; 
-    }
+     1 std::string analysis_url(const analysis_request& request) {
+     2 
+     3     if(request.option_url != "")
+     4       return request.option_url;
+     5     else if(request.given_url != "") 
+     6       return request.given_url; 
+     7     else
+     8       return ""; 
+     9 }
 
-% srcml --xpath="//src:function[src:name='analysis_language']" project.xml | srcml | cat -v
+% srcml --xpath="//src:function[src:name='analysis_language']" project.xml | srcml
 
-    std::string analysis_language(const analysis_request& request, const std::string& filename) {
-    
-        if(request.option_language != "")
-          //good place for extension not supported error handling
-          //******************************************************
-          return request.option_language; 
-        else if(request.option_filename != "")
-          return get_language_from_filename(request.option_filename);
-        else if(request.given_filename != "") 
-        {
-          if(get_language_from_filename(request.given_filename) != "")
-            return get_language_from_filename(request.given_filename);
-        }
-    
-        return "";
-    }
+     1 std::string analysis_language(const analysis_request& request, const std::string& filename) {
+     2 
+     3     if(request.option_language != "")
+     4       //good place for extension not supported error handling
+     5       //******************************************************
+     6       return request.option_language; 
+     7     else if(request.option_filename != "")
+     8       return get_language_from_filename(request.option_filename);
+     9     else if(request.given_filename != "") 
+    10     {
+    11       if(get_language_from_filename(request.given_filename) != "")
+    12         return get_language_from_filename(request.given_filename);
+    13     }
+    14 
+    15     return "";
+    16 }
 
 ## Test Cases 
-% srcml code_analysis_t.cpp --xpath="//src:function[src:name='main']/src:block" | srcml | cat -v
+% srcml code_analysis_t.cpp --xpath="//src:function[src:name='main']/src:block" | srcml
 
     {
     
@@ -456,6 +456,7 @@
 
     g++ -std=c++11 -c code_analysis_t.cpp
     g++ -std=c++11 -c code_analysis.cpp
+    g++ -std=c++11 -c get_language_from_filename.cpp
     g++ code_analysis_t.o code_analysis.o get_language_from_filename.o -o code_analysis_t
     g++ -std=c++11 -c get_language_from_filename_t.cpp
     g++ get_language_from_filename_t.o get_language_from_filename.o -o get_language_from_filename_t
@@ -478,6 +479,7 @@
        @file code_analysis.cpp
      
        Implementation of analysis requests
+
 
 ### Commit e552f9
 % git checkout -q e552f9  
@@ -520,6 +522,7 @@
     +
          return 0;
      }
+
 
 ### Commit 8d56a3
 % git checkout -q 8d56a3  
@@ -569,6 +572,7 @@
          return 0;
      }
 
+
 ### Commit 4e4714
 % git checkout -q 4e4714  
 % make  
@@ -600,6 +604,7 @@
      }
      
      /** URL extracted from the request
+
 
 ### Commit 39d04f
 % git checkout -q 39d04f  
@@ -646,6 +651,7 @@
      
      
          return 0;
+
 
 ### Commit d9b341
 % git checkout -q d9b341  
@@ -706,6 +712,7 @@
              assert(request.given_filename == "project.tar.gz");
              assert(request.entry_filename == "");
              assert(analysis_url(request) == "");
+
 
 ### Commit e6a1f5
 % git checkout -q e6a1f5  
@@ -770,6 +777,7 @@
      
          return 0;
 
+
 ### Commit 805e14
 % git checkout -q 805e14  
 % make  
@@ -823,6 +831,7 @@
              assert(analysis_language(request, filename) == "");
              assert(code_analysis(request) == false);
 
+
 ### Commit 3a3a1b
 % git checkout -q 3a3a1b  
 % make  
@@ -868,6 +877,7 @@
      
          return 0;
 
+
 ### Commit eb799b
 % git checkout -q eb799b  
 % make  
@@ -910,6 +920,7 @@
      
          return 0;
 
+
 ### Commit 08dee2
 % git checkout -q 08dee2  
 % make  
@@ -943,6 +954,7 @@
      }
      
      /** Language extracted from the request and the filename
+
 
 ### Commit d360e0
 % git checkout -q d360e0  
@@ -987,6 +999,7 @@
      
          return 0;
 
+
 ### Commit 58b324
 % git checkout -q 58b324  
 % make  
@@ -1028,6 +1041,7 @@
      
          return 0;
 
+
 ### Commit cba6b2
 % git checkout -q cba6b2  
 % make  
@@ -1056,6 +1070,7 @@
     +      return request.option_language; 
          return "";
      }
+
 
 ### Commit 806b66
 % git checkout -q 806b66  
@@ -1109,10 +1124,12 @@
      
          return 0;
 
+
 ### Commit a9c2b0
 % git checkout -q a9c2b0  
 % make  
 
+    g++ -std=c++11 -c code_analysis_t.cpp
     g++ -std=c++11 -c code_analysis.cpp
     g++ code_analysis_t.o code_analysis.o get_language_from_filename.o -o code_analysis_t
 
@@ -1182,12 +1199,12 @@
      
          return 0;
 
+
 ### Commit 48c770
 % git checkout -q 48c770  
 % make  
 
-    g++ -std=c++11 -c code_analysis_t.cpp
-    g++ code_analysis_t.o code_analysis.o get_language_from_filename.o -o code_analysis_t
+    make: Nothing to be done for `all'.
 
 % git show
 
@@ -1211,10 +1228,12 @@
          }
          //given_filename is source code archive
 
+
 ### Commit 98aa9c
 % git checkout -q 98aa9c  
 % make  
 
+    g++ -std=c++11 -c code_analysis_t.cpp
     g++ -std=c++11 -c code_analysis.cpp
     g++ code_analysis_t.o code_analysis.o get_language_from_filename.o -o code_analysis_t
 
@@ -1257,6 +1276,7 @@
              assert(code_analysis(request) == false);
          }
          // option url precedence
+
 
 ### Commit 675107
 % git checkout -q 675107  
@@ -1317,6 +1337,7 @@
      
          return 0;
 
+
 ### Commit 15aecb
 % git checkout -q 15aecb  
 % make  
@@ -1347,6 +1368,7 @@
              return request.entry_filename; 
            return request.given_filename; 
          }
+
 
 ### Commit 181546
 % git checkout -q 181546  
@@ -1383,6 +1405,7 @@
            return request.option_language; 
          else if(request.option_filename != "")
            return get_language_from_filename(request.option_filename);
+
 
 ### Commit 8bb995
 % git checkout -q 8bb995  
@@ -1429,6 +1452,7 @@
      
      
          return 0;
+
 
 ### Commit edcdd9
 % git checkout -q edcdd9  
@@ -1485,6 +1509,7 @@
     +bool langSupport(std::string& s){
     +  return false; 
     +}
+
 
 ### Commit f73fc1
 % git checkout -q f73fc1  
@@ -1548,12 +1573,12 @@
      
      
 
+
 ### Commit 913782
 % git checkout -q 913782  
 % make  
 
-    g++ -std=c++11 -c code_analysis.cpp
-    g++ code_analysis_t.o code_analysis.o get_language_from_filename.o -o code_analysis_t
+    make: Nothing to be done for `all'.
 
 % git show
 
@@ -1576,6 +1601,7 @@
      }
      bool langSupport(std::string& s){
        return false; 
+
 
 ### Commit 39497b
 % git checkout -q 39497b  
@@ -1626,6 +1652,7 @@
          }
      
 
+
 ### Commit 94ab05
 % git checkout -q 94ab05  
 % make  
@@ -1656,6 +1683,7 @@
        return false;  
      }
      bool langSupport(std::string& s){
+
 
 ### Commit 110ff8
 % git checkout -q 110ff8  
@@ -1757,6 +1785,7 @@
      
      
 
+
 ### Commit 5fe509
 % git checkout -q 5fe509  
 % make  
@@ -1808,6 +1837,7 @@
              assert(code_analysis(request) == false);
          }
 
+
 ### Commit 37d903
 % git checkout -q 37d903  
 % make  
@@ -1823,6 +1853,7 @@
     
         Merge branch 'temp' into workingBranch
     
+
 
 ### Commit c3e98d
 % git checkout -q c3e98d  
